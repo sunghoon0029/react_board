@@ -1,6 +1,5 @@
 package com.project.board.entity;
 
-import com.project.board.dto.BoardRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
