@@ -1,12 +1,16 @@
 import React from "react";
-import axios from "axios";
+import { Route, Routes } from "react-router-dom";
+import BoardList from "./routes/BoardList";
+import Home from "./routes/Home";
+
 
 const App = () => {
 
   return (
-    <div>
-      <h2>React</h2>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/board" element={<BoardList />} />
+    </Routes>
   );
 }
 
