@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BoardList = () => {
+
+    const navigate = useNavigate();
 
     const [boardList, setBoardList] = useState([]);
 
@@ -14,18 +16,27 @@ const BoardList = () => {
         console.log(page);
     };
 
+    const moveToWrite = () => {
+        navigate('/write');
+    };
+
     useEffect(() => {
         getBoardList();
     }, []);
 
     return (
-        <ul>
-            {boardList.map(board => (
-                <li key={board.id}>
-                    <Link to={`/board/${board.id}`}>{board.title}</Link>
-                </li>
-            ))}
-        </ul>
+        <div>
+            <ul>
+                {boardList.map((board) => (
+                    <li key={board.id}>
+                        <Link to={`/board/${board.id}`}>{board.title}</Link>
+                    </li>
+                ))}
+            </ul>
+            <div>
+                <button onClick={moveToWrite}>게시글 작성</button>
+            </div>
+        </div>
     );
 };
 
