@@ -32,4 +32,13 @@ public class BoardResponse {
                 .updatedTime(board.getUpdatedTime())
                 .build();
     }
+
+    public BoardResponse(Long id, String writer, String title, String content, LocalDateTime createdTime, LocalDateTime updatedTime) {
+        this.id = id;
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+    }
 }
