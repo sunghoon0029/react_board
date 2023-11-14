@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Board = ({ id, writer, title, content }) => {
+const Board = ({ id, writer, title, content, createdTime }) => {
 
     const navigate = useNavigate();
 
@@ -28,6 +28,7 @@ const Board = ({ id, writer, title, content }) => {
             <div>
                 <h2>{title}</h2>
                 <h5>{writer}</h5>
+                <h5>{createdTime}</h5>
                 <hr />
                 <p>{content}</p>
             </div>

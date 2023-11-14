@@ -29,6 +29,7 @@ const BoardDetail = () => {
                     writer={board.writer}
                     title={board.title}
                     content={board.content}
+                    createdTime={board.createdTime}
                 />
             )}
         </div>
