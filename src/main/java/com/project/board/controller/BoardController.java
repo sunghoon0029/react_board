@@ -4,11 +4,9 @@ import com.project.board.dto.BoardRequest;
 import com.project.board.dto.BoardResponse;
 import com.project.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,15 +28,15 @@ public class BoardController {
         return boardService.findAll();
     }
 
-    @GetMapping("/paging")
-    public Page<BoardResponse> paging(@PageableDefault(page = 1) Pageable pageable) {
-        Page<BoardResponse> boardList = boardService.paging(pageable);
+    @GetMapping("/search")
+    public List<BoardResponse> searchBoardTitle(@Nullable @RequestParam("title") String title) {
+        return boardService.searchBoardTitle(title);
+    }
 
-        int blockLimit = 3;
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
-
-        return boardList;
+    @GetMapping("")
+    public List<BoardResponse> list(@RequestParam("page") int page,
+                                    @RequestParam("size") int size) {
+        return boardService.boardListPage(page, size);
     }
 
     @GetMapping("/{id}")

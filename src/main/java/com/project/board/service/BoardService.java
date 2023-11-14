@@ -5,14 +5,13 @@ import com.project.board.dto.BoardResponse;
 import com.project.board.entity.Board;
 import com.project.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,15 +36,54 @@ public class BoardService {
         return boardResponseList;
     }
 
-    public Page<BoardResponse> paging(Pageable pageable) {
-        int page = pageable.getPageNumber() - 1;
-        int pageLimit = 5;
+    public List<BoardResponse> searchBoardTitle(String title) {
 
-        Page<Board> boardList = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        List<BoardResponse> response;
 
-        Page<BoardResponse> boardResponseList = boardList.map(board -> new BoardResponse(board.getId(), board.getWriter(), board.getTitle(), board.getContent(), board.getCreatedTime(), board.getUpdatedTime()));
+        if (Objects.isNull(title)) {
+            response = boardRepository.findAll().stream()
+                .map(m ->
+                    BoardResponse.builder()
+                            .id(m.getId())
+                            .writer(m.getWriter())
+                            .title(m.getTitle())
+                            .content(m.getContent())
+                            .createdTime(m.getCreatedTime())
+                            .updatedTime(m.getUpdatedTime())
+                            .build())
+                    .collect(Collectors.toList());
+        } else {
+            response = boardRepository.searchBoardTitle(title).stream()
+                .map(m ->
+                    BoardResponse.builder()
+                            .id(m.getId())
+                            .writer(m.getWriter())
+                            .title(m.getTitle())
+                            .content(m.getContent())
+                            .createdTime(m.getCreatedTime())
+                            .updatedTime(m.getUpdatedTime())
+                            .build())
+                    .collect(Collectors.toList());
+        }
 
-        return boardResponseList;
+        return response;
+    }
+
+    public List<BoardResponse> boardListPage(int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return boardRepository.boardListPage(pageRequest.getOffset(), pageRequest.getPageSize()).stream()
+            .map(m ->
+                BoardResponse.builder()
+                    .id(m.getId())
+                    .writer(m.getWriter())
+                    .title(m.getTitle())
+                    .content(m.getContent())
+                    .createdTime(m.getCreatedTime())
+                    .updatedTime(m.getUpdatedTime())
+                    .build())
+            .collect(Collectors.toList());
     }
 
     public BoardResponse findById(Long id) {
