@@ -29,14 +29,20 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public List<BoardResponse> searchBoardTitle(@Nullable @RequestParam("title") String title) {
-        return boardService.searchBoardTitle(title);
+    public List<BoardResponse> searchBoardByTitle(@Nullable @RequestParam("title") String title) {
+        return boardService.searchBoardByTitle(title);
     }
 
-    @GetMapping("")
-    public List<BoardResponse> list(@RequestParam("page") int page,
-                                    @RequestParam("size") int size) {
+    @GetMapping("/paging/ex")
+    public List<BoardResponse> boardListPage(@RequestParam("page") int page,
+                                             @RequestParam("size") int size) {
         return boardService.boardListPage(page, size);
+    }
+
+    @GetMapping("/paging")
+    public List<BoardResponse> boardListPageSortCreateTime(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "5") int size) {
+        return boardService.boardListPageSortCreateTime(page, size);
     }
 
     @GetMapping("/{id}")

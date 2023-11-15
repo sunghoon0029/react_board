@@ -12,14 +12,14 @@ public class BoardRequest {
 
     private String title;
 
-    private String content;
+    private String contents;
 
     public Board toEntity(BoardRequest request) {
         return Board.builder()
                 .id(id)
                 .writer(writer)
                 .title(title)
-                .content(content)
+                .contents(contents)
                 .build();
     }
 }

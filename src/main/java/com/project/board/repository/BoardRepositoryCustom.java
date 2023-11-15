@@ -6,7 +6,11 @@ import java.util.List;
 
 public interface BoardRepositoryCustom {
 
-    List<Board> searchBoardTitle(String title);
-
     List<Board> boardListPage(long offset, int pageSize);
+
+    List<Board> boardListPageSortCreateTime(long offset, int pageSize);
+
+    List<Board> searchBoardByTitle(String title);
+
+    void updateHits(Long id);
 }

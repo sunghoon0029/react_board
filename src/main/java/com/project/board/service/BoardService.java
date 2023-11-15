@@ -36,7 +36,7 @@ public class BoardService {
         return boardResponseList;
     }
 
-    public List<BoardResponse> searchBoardTitle(String title) {
+    public List<BoardResponse> searchBoardByTitle(String title) {
 
         List<BoardResponse> response;
 
@@ -47,19 +47,21 @@ public class BoardService {
                             .id(m.getId())
                             .writer(m.getWriter())
                             .title(m.getTitle())
-                            .content(m.getContent())
+                            .contents(m.getContents())
+                            .hits(m.getHits())
                             .createdTime(m.getCreatedTime())
                             .updatedTime(m.getUpdatedTime())
                             .build())
                     .collect(Collectors.toList());
         } else {
-            response = boardRepository.searchBoardTitle(title).stream()
+            response = boardRepository.searchBoardByTitle(title).stream()
                 .map(m ->
                     BoardResponse.builder()
                             .id(m.getId())
                             .writer(m.getWriter())
                             .title(m.getTitle())
-                            .content(m.getContent())
+                            .contents(m.getContents())
+                            .hits(m.getHits())
                             .createdTime(m.getCreatedTime())
                             .updatedTime(m.getUpdatedTime())
                             .build())
@@ -79,15 +81,35 @@ public class BoardService {
                     .id(m.getId())
                     .writer(m.getWriter())
                     .title(m.getTitle())
-                    .content(m.getContent())
+                    .contents(m.getContents())
+                    .hits(m.getHits())
                     .createdTime(m.getCreatedTime())
                     .updatedTime(m.getUpdatedTime())
                     .build())
             .collect(Collectors.toList());
     }
 
+    public List<BoardResponse> boardListPageSortCreateTime(int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return boardRepository.boardListPageSortCreateTime(pageRequest.getOffset(), pageRequest.getPageSize()).stream()
+                .map(m ->
+                        BoardResponse.builder()
+                                .id(m.getId())
+                                .writer(m.getWriter())
+                                .title(m.getTitle())
+                                .contents(m.getContents())
+                                .hits(m.getHits())
+                                .createdTime(m.getCreatedTime())
+                                .updatedTime(m.getUpdatedTime())
+                                .build())
+                .collect(Collectors.toList());
+    }
+
     public BoardResponse findById(Long id) {
         Board board = boardRepository.findById(id).get();
+        boardRepository.updateHits(board.getId());
         BoardResponse response = BoardResponse.toDTO(board);
 
         return response;
@@ -95,7 +117,7 @@ public class BoardService {
 
     public boolean update(Long id, BoardRequest request) {
         Board board = boardRepository.findById(id).get();
-        board.updateBoard(request.getTitle(), request.getContent());
+        board.updateBoard(request.getTitle(), request.getContents());
         boardRepository.save(board);
 
         return true;

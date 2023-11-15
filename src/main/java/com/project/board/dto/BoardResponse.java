@@ -16,7 +16,9 @@ public class BoardResponse {
 
     private String title;
 
-    private String content;
+    private String contents;
+
+    private int hits;
 
     private LocalDateTime createdTime;
 
@@ -27,17 +29,19 @@ public class BoardResponse {
                 .id(board.getId())
                 .writer(board.getWriter())
                 .title(board.getTitle())
-                .content(board.getContent())
+                .contents(board.getContents())
+                .hits(board.getHits())
                 .createdTime(board.getCreatedTime())
                 .updatedTime(board.getUpdatedTime())
                 .build();
     }
 
-    public BoardResponse(Long id, String writer, String title, String content, LocalDateTime createdTime, LocalDateTime updatedTime) {
+    public BoardResponse(Long id, String writer, String title, String contents, int hits, LocalDateTime createdTime, LocalDateTime updatedTime) {
         this.id = id;
         this.writer = writer;
         this.title = title;
-        this.content = content;
+        this.contents = contents;
+        this.hits = hits;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
     }

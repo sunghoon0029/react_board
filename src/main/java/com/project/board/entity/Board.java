@@ -26,10 +26,13 @@ public class Board extends BaseTimeEntity {
     private String title;
 
     @Column
-    private String content;
+    private String contents;
+
+    @Column
+    private int hits;
 
     public void updateBoard(String title, String content) {
         this.title = title;
-        this.content = content;
+        this.contents = content;
     }
 }
