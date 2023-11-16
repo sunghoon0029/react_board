@@ -11,9 +11,6 @@ const BoardList = () => {
     const getBoardList = async () => {
         const res = await axios.get('http://localhost:8080/board/');
         setBoardList(res.data);
-
-        const page = res.pagination;
-        console.log(page);
     };
 
     const moveToWrite = () => {

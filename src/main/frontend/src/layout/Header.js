@@ -8,6 +8,8 @@ const Header = () => {
             <Link to="/">홈</Link>
             &nbsp;&nbsp;|&nbsp;&nbsp;
             <Link to="/board">게시판</Link>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <Link to="/board/paging">게시판 페이징</Link>
             <hr />
         </header>
     );

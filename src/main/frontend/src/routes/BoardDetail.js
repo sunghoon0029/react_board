@@ -28,7 +28,8 @@ const BoardDetail = () => {
                     id={board.id}
                     writer={board.writer}
                     title={board.title}
-                    content={board.content}
+                    content={board.contents}
+                    hits={board.hits}
                     createdTime={board.createdTime}
                 />
             )}

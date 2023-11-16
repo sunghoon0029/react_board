@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Board = ({ id, writer, title, content, createdTime }) => {
+const Board = ({ id, writer, title, contents, hits, createdTime }) => {
 
     const navigate = useNavigate();
 
@@ -14,13 +14,13 @@ const Board = ({ id, writer, title, content, createdTime }) => {
         if (window.confirm('게시글을 삭제하시겠습니까?')) {
             await axios.delete(`http://localhost:8080/board/delete/${id}`).then((res) => {
                 alert('삭제 완료');
-                navigate('/board');
+                navigate('/board/paging');
             });
         };
     };
 
     const moveToList = () => {
-        navigate('/board');
+        navigate('/board/paging');
     };
 
     return (
@@ -29,8 +29,9 @@ const Board = ({ id, writer, title, content, createdTime }) => {
                 <h2>{title}</h2>
                 <h5>{writer}</h5>
                 <h5>{createdTime}</h5>
+                <h5>{hits}</h5>
                 <hr />
-                <p>{content}</p>
+                <p>{contents}</p>
             </div>
             <div>
                 <button onClick={moveToUpdate}>게시글 수정</button>

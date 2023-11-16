@@ -9,10 +9,10 @@ const BoardWrite = () => {
     const [board, setBoard] = useState({
         writer: '',
         title: '',
-        content: '',
+        contents: '',
     });
 
-    const { writer, title, content } = board;
+    const { writer, title, contents } = board;
 
     const onChange = (event) => {
         const { value, name } = event.target;
@@ -25,12 +25,12 @@ const BoardWrite = () => {
     const saveBoard = async () => {
         await axios.post('http://localhost:8080/board/save', board).then((res) => {
             alert('작성 완료');
-            navigate('/board');
+            navigate('/board/paging');
         });
     };
 
     const backToList = () => {
-        navigate('/board');
+        navigate('/board/paging');
     };
 
     return (
@@ -48,10 +48,10 @@ const BoardWrite = () => {
             <div>
                 <span>내용</span>
                 <textarea
-                    name="content"
+                    name="contents"
                     cols="30"
                     rows="10"
-                    value={content}
+                    value={contents}
                     onChange={onChange}
                 ></textarea>
             </div>

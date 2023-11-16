@@ -12,10 +12,10 @@ const BoardUpdate = () => {
         id: 0,
         writer: '',
         title: '',
-        content: '',
+        contents: '',
     });
 
-    const { writer, title, content } = board;
+    const { writer, title, contents } = board;
 
     const onChange = (event) => {
         const { value, name } = event.target;
@@ -58,10 +58,10 @@ const BoardUpdate = () => {
             <div>
                 <span>내용</span>
                 <textarea
-                    name="content"
+                    name="contents"
                     cols="30"
                     rows="10"
-                    value={content}
+                    value={contents}
                     onChange={onChange} 
                 ></textarea>
             </div>
